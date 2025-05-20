@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI dan Implementasi AI di Industri Contact Center</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7F55B1;
+            --secondary-color: #9B7EBD;
+            --accent-color: #F49BAB;
+            --text-light: #f8fafc;
+            --text-dark: #0f172a;
+            --section-padding: 5rem 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-light);
+            padding: 8rem 0;
+        }
+        
+        .hero h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+        
+        .implementation-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .implementation-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .implementation-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .cta-section {
+            background-color: #f8fafc;
+            padding: var(--section-padding);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+        
+        .stats-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-label {
+            font-size: 1rem;
+            color: #64748b;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+        
+        .testimonial-quote {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+        }
+        
+        .testimonial-position {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        
+        .benefit-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .benefit-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+        }
+        
+        footer {
+            background-color: #0f172a;
+            color: var(--text-light);
+            padding: 3rem 0;
+        }
+        
+        .footer-heading {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-link {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-right: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Animasi */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+            
+            .implementation-item {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">OmniConnect<span class="text-primary">AI</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#beranda">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#implementasi">Implementasi AI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#manfaat">Manfaat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimoni">Testimoni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-lg-3 px-4" href="#kontak">Hubungi Kami</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="beranda">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <h1 class="mb-4">AI dan Implementasi AI di Industri Contact Center</h1>
+                    <p class="mb-4">Transformasi layanan pelanggan dengan kecerdasan buatan untuk pengalaman omnichannel yang lebih personal, efisien, dan memuaskan.</p>
+                    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3">
+                        <a href="#implementasi" class="btn btn-light">Pelajari Lebih Lanjut</a>
+                        <a href="#kontak" class="btn btn-outline-light">Hubungi Kami</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <svg width="100%" height="400" viewBox="0 0 600 400" class="img-fluid rounded-4 shadow">
+                        <defs>
+                            <linearGradient id="heroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2563eb" />
+                                <stop offset="100%" stop-color="#1e40af" />
+                            </linearGradient>
+                            <linearGradient id="screenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#e0e7ff" />
+                                <stop offset="100%" stop-color="#c7d2fe" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="600" height="400" fill="#f8fafc" rx="12" />
+                        <g transform="translate(60, 50)">
+                            <!-- Computer Base -->
+                            <rect x="50" y="200" width="400" height="20" rx="5" fill="#334155" />
+                            <rect x="240" y="200" width="20" height="100" fill="#334155" />
+                            <rect x="200" y="300" width="100" height="5" rx="2" fill="#334155" />
+                            
+                            <!-- Computer Screen -->
+                            <rect x="50" y="20" width="400" height="250" rx="10" fill="#475569" />
+                            <rect x="60" y="30" width="380" height="210" rx="5" fill="url(#screenGradient)" />
+                            
+                            <!-- AI and Chat Interface Elements -->
+                            <circle cx="430" cy="50" r="10" fill="#2563eb" />
+                            
+                            <!-- Message Bubbles -->
+                            <rect x="90" y="70" width="140" height="40" rx="10" fill="#e2e8f0" />
+                            <rect x="270" y="120" width="140" height="40" rx="10" fill="#bfdbfe" />
+                            <rect x="90" y="170" width="140" height="40" rx="10" fill="#e2e8f0" />
+                            
+                            <!-- Robot Icon -->
+                            <g transform="translate(380, 210) scale(0.5)">
+                                <rect x="-30" y="-30" width="60" height="60" rx="10" fill="#2563eb" />
+                                <circle cx="-10" cy="-10" r="5" fill="white" />
+                                <circle cx="10" cy="-10" r="5" fill="white" />
+                                <rect x="-15" y="10" width="30" height="5" rx="2" fill="white" />
+                            </g>
+                            
+                            <!-- AI Elements -->
+                            <g transform="translate(240, 100)">
+                                <circle cx="0" cy="0" r="40" fill="url(#heroGradient)" opacity="0.7" />
+                                <path d="M-20,-20 L20,20 M-20,20 L20,-20" stroke="white" stroke-width="4" />
+                            </g>
+                            
+                            <!-- Connection Lines -->
+                            <path d="M90,90 C40,120 40,160 90,190" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-dasharray="5,5" />
+                            <path d="M410,140 C450,120 450,160 410,210" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-dasharray="5,5" />
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementasi AI Section -->
+    <section class="py-5" id="implementasi">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Implementasi AI di Contact Center</h2>
+                <p class="text-muted">Bagaimana kecerdasan buatan merevolusi industri layanan pelanggan</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Implementasi 1 -->
+                <div class="col-md-4">
+                    <div class="implementation-item p-4 text-center fade-in">
+                        <div class="implementation-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Chatbot & Virtual Assistant</h3>
+                        <p class="text-muted mb-3">Asisten virtual berbasis AI yang mampu memberikan respons cepat terhadap pertanyaan umum pelanggan, membuat reservasi, dan menyelesaikan tugas-tugas rutin secara otomatis.</p>
+                        <ul class="list-unstyled text-start">
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Layanan 24/7 tanpa jeda</li>
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Penanganan multi-channel</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Pengurangan waktu tunggu</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Implementasi 2 -->
+                <div class="col-md-4">
+                    <div class="implementation-item p-4 text-center fade-in" data-delay="200">
+                        <div class="implementation-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Speech & Text Analytics</h3>
+                        <p class="text-muted mb-3">Analisis percakapan pelanggan untuk mengidentifikasi tren, sentimen, dan masalah berulang, memungkinkan perbaikan layanan yang lebih cepat dan tepat sasaran.</p>
+                        <ul class="list-unstyled text-start">
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Deteksi sentimen pelanggan</li>
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Identifikasi masalah berulang</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Analisis percakapan real-time</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Implementasi 3 -->
+                <div class="col-md-4">
+                    <div class="implementation-item p-4 text-center fade-in" data-delay="400">
+                        <div class="implementation-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Prediktif & Personalisasi</h3>
+                        <p class="text-muted mb-3">Sistem AI yang dapat memprediksi kebutuhan pelanggan, merancang solusi personal, dan mengoptimalkan alokasi sumber daya berdasarkan pola historis.</p>
+                        <ul class="list-unstyled text-start">
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Rekomendasi personal</li>
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Prediksi tren kontak</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Optimasi perutean kontak</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistik -->
+    <section class="bg-light py-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="stats-box text-center fade-in">
+                        <div class="stats-number" data-target="70">0</div>
+                        <div class="stats-label">Pengurangan Waktu Tunggu (%)</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-box text-center fade-in" data-delay="200">
+                        <div class="stats-number" data-target="85">0</div>
+                        <div class="stats-label">Kepuasan Pelanggan (%)</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-box text-center fade-in" data-delay="400">
+                        <div class="stats-number" data-target="40">0</div>
+                        <div class="stats-label">Pengurangan Biaya Operasional (%)</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-box text-center fade-in" data-delay="600">
+                        <div class="stats-number" data-target="24">0</div>
+                        <div class="stats-label">Layanan 24/7 (Jam)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Manfaat AI -->
+    <section class="py-5" id="manfaat">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <svg width="100%" height="400" viewBox="0 0 600 400" class="img-fluid rounded-4 shadow fade-in">
+                        <defs>
+                            <linearGradient id="benefitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2563eb" />
+                                <stop offset="100%" stop-color="#1e40af" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="600" height="400" fill="#f8fafc" rx="12" />
+                        
+                        <!-- Dashboard -->
+                        <rect x="50" y="50" width="500" height="300" rx="10" fill="white" stroke="#e2e8f0" stroke-width="2" />
+                        
+                        <!-- Header -->
+                        <rect x="50" y="50" width="500" height="50" rx="10" fill="#f1f5f9" />
+                        <text x="70" y="80" font-family="Arial" font-size="16" font-weight="bold" fill="#334155">AI Contact Center Dashboard</text>
+                        
+                        <!-- Sidebar -->
+                        <rect x="50" y="100" width="100" height="250" fill="#f8fafc" />
+                        
+                        <!-- Menu Items -->
+                        <rect x="60" y="120" width="80" height="30" rx="5" fill="#eff6ff" />
+                        <text x="75" y="140" font-family="Arial" font-size="12" fill="#2563eb">Analytics</text>
+                        
+                        <rect x="60" y="160" width="80" height="30" rx="5" fill="#2563eb" />
+                        <text x="75" y="180" font-family="Arial" font-size="12" fill="white">Dashboard</text>
+                        
+                        <rect x="60" y="200" width="80" height="30" rx="5" fill="#eff6ff" />
+                        <text x="75" y="220" font-family="Arial" font-size="12" fill="#2563eb">Reports</text>
+                        
+                        <rect x="60" y="240" width="80" height="30" rx="5" fill="#eff6ff" />
+                        <text x="75" y="260" font-family="Arial" font-size="12" fill="#2563eb">Settings</text>
+                        
+                        <!-- Main Content -->
+                        <line x1="150" y1="100" x2="150" y2="350" stroke="#e2e8f0" stroke-width="1" />
+                        
+                        <!-- Charts -->
+                        <rect x="170" y="120" width="160" height="100" rx="5" fill="white" stroke="#e2e8f0" stroke-width="1" />
+                        <text x="180" y="140" font-family="Arial" font-size="12" font-weight="bold" fill="#334155">Customer Satisfaction</text>
+                        
+                        <!-- Bar Chart -->
+                        <rect x="180" y="160" width="20" height="40" fill="#2563eb" rx="2" />
+                        <rect x="210" y="150" width="20" height="50" fill="#3b82f6" rx="2" />
+                        <rect x="240" y="170" width="20" height="30" fill="#60a5fa" rx="2" />
+                        <rect x="270" y="145" width="20" height="55" fill="#2563eb" rx="2" />
+                        <rect x="300" y="120" width="20" height="80" fill="#3b82f6" rx="2" />
+                        
+                        <!-- Second Chart -->
+                        <rect x="350" y="120" width="180" height="100" rx="5" fill="white" stroke="#e2e8f0" stroke-width="1" />
+                        <text x="360" y="140" font-family="Arial" font-size="12" font-weight="bold" fill="#334155">AI Response Time</text>
+                        
+                        <!-- Line Chart -->
+                        <polyline points="360,180 380,175 400,190 420,160 440,165 460,150 480,140 500,145" 
+                                fill="none" stroke="#2563eb" stroke-width="2" />
+                        <circle cx="360" cy="180" r="3" fill="#2563eb" />
+                        <circle cx="380" cy="175" r="3" fill="#2563eb" />
+                        <circle cx="400" cy="190" r="3" fill="#2563eb" />
+                        <circle cx="420" cy="160" r="3" fill="#2563eb" />
+                        <circle cx="440" cy="165" r="3" fill="#2563eb" />
+                        <circle cx="460" cy="150" r="3" fill="#2563eb" />
+                        <circle cx="480" cy="140" r="3" fill="#2563eb" />
+                        <circle cx="500" cy="145" r="3" fill="#2563eb" />
+                        
+                        <!-- Stats Cards -->
+                        <rect x="170" y="240" width="110" height="90" rx="5" fill="white" stroke="#e2e8f0" stroke-width="1" />
+                        <text x="180" y="260" font-family="Arial" font-size="12" fill="#64748b">Avg. Handle Time</text>
+                        <text x="180" y="285" font-family="Arial" font-size="18" font-weight="bold" fill="#334155">1.8 min</text>
+                        <path d="M180,300 L200,290 L220,300" stroke="green" stroke-width="2" fill="none" />
+                        <text x="225" y="300" font-family="Arial" font-size="10" fill="green">-35%</text>
+                        
+                        <rect x="290" y="240" width="110" height="90" rx="5" fill="white" stroke="#e2e8f0" stroke-width="1" />
+                        <text x="300" y="260" font-family="Arial" font-size="12" fill="#64748b">Automation Rate</text>
+                        <text x="300" y="285" font-family="Arial" font-size="18" font-weight="bold" fill="#334155">75%</text>
+                        <path d="M300,300 L320,290 L340,300" stroke="green" stroke-width="2" fill="none" />
+                        <text x="345" y="300" font-family="Arial" font-size="10" fill="green">+12%</text>
+                        
+                        <rect x="410" y="240" width="110" height="90" rx="5" fill="white" stroke="#e2e8f0" stroke-width="1" />
+                        <text x="420" y="260" font-family="Arial" font-size="12" fill="#64748b">Cost Savings</text>
+                        <text x="420" y="285" font-family="Arial" font-size="18" font-weight="bold" fill="#334155">40%</text>
+                        <path d="M420,300 L440,290 L460,300" stroke="green" stroke-width="2" fill="none" />
+                        <text x="465" y="300" font-family="Arial" font-size="10" fill="green">+8%</text>
+                        
+                        <!-- AI Elements -->
+                        <circle cx="440" cy="70" r="15" fill="url(#benefitGradient)" opacity="0.8" />
+                        <text x="435" y="75" font-family="Arial" font-size="14" font-weight="bold" fill="white">AI</text>
+                    </svg>
+                </div>
+                <div class="col-lg-6 ps-lg-5">
+                    <h2 class="mb-4">Manfaat Mengimplementasikan AI di Contact Center</h2>
+                    
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-2">Peningkatan Efisiensi Operasional</h3>
+                            <p>Otomatisasi tugas-tugas rutin, pengurangan waktu penanganan, dan alokasi sumber daya yang lebih optimal.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item fade-in" data-delay="200">
+                        <div class="benefit-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-2">Peningkatan Pengalaman Pelanggan</h3>
+                            <p>Respon yang lebih cepat dan akurat, serta layanan yang dipersonalisasi berdasarkan preferensi dan riwayat pelanggan.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item fade-in" data-delay="400">
+                        <div class="benefit-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-2">Wawasan Data yang Lebih Mendalam</h3>
+                            <p>Analisis pola interaksi pelanggan untuk pengambilan keputusan yang lebih baik dan strategi yang lebih tepat sasaran.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item fade-in" data-delay="600">
+                        <div class="benefit-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-2">Pengurangan Biaya</h3>
+                            <p>Penghematan biaya operasional melalui otomatisasi dan penggunaan sumber daya yang lebih efisien.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimoni -->
+    <section class="bg-light py-5" id="testimoni">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Apa Kata Mereka</h2>
+                <p class="text-muted">Testimoni dari pelanggan yang telah mengimplementasikan solusi AI kami</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card fade-in">
+                        <p class="testimonial-quote">"Implementasi AI chatbot telah meningkatkan efisiensi layanan pelanggan kami secara signifikan. Dengan 80% pertanyaan rutin ditangani secara otomatis, tim kami sekarang dapat fokus pada kasus yang lebih kompleks."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <circle cx="30" cy="30" r="30" fill="#e2e8f0" />
+                                    <circle cx="30" cy="22" r="10" fill="#94a3b8" />
+                                    <path d="M10,55 C10,42 50,42 50,55" fill="#94a3b8" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="testimonial-author">Ahmad Santoso</div>
+                                <div class="testimonial-position">CTO, PT Retail Sejahtera</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card fade-in" data-delay="200">
+                        <p class="testimonial-quote">"Analisis sentimen berbasis AI membantu kami mendeteksi masalah potensial sebelum menjadi krisis besar. Tingkat retensi pelanggan kami meningkat 35% sejak menerapkan solusi OmniConnectAI."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <circle cx="30" cy="30" r="30" fill="#e2e8f0" />
+                                    <circle cx="30" cy="22" r="10" fill="#94a3b8" />
+                                    <path d="M10,55 C10,42 50,42 50,55" fill="#94a3b8" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="testimonial-author">Dewi Lestari</div>
+                                <div class="testimonial-position">Head of CS, Bank Mandiri Digital</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card fade-in" data-delay="400">
+                        <p class="testimonial-quote">"Kemampuan AI untuk mempersonalisasi interaksi dengan pelanggan telah mengubah cara kami beroperasi. Skor kepuasan pelanggan kami meningkat dari 72% menjadi 91% dalam 6 bulan pertama."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <circle cx="30" cy="30" r="30" fill="#e2e8f0" />
+                                    <circle cx="30" cy="22" r="10" fill="#94a3b8" />
+                                    <path d="M10,55 C10,42 50,42 50,55" fill="#94a3b8" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="testimonial-author">Budi Purnomo</div>
+                                <div class="testimonial-position">CEO, Telkom Regional 2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="kontak">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="mb-4">Siap untuk Transformasi Digital Contact Center Anda?</h2>
+                    <p class="lead mb-5">Hubungi tim kami sekarang untuk konsultasi gratis dan demo produk OmniConnectAI.</p>
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <form class="needs-validation" novalidate>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-lg" placeholder="Nama Lengkap" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control form-control-lg" placeholder="Email" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-lg" placeholder="Perusahaan" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="tel" class="form-control form-control-lg" placeholder="Nomor Telepon" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea class="form-control form-control-lg" rows="4" placeholder="Pesan Anda" required></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary btn-lg w-100">Hubungi Kami</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <a href="#" class="h3 text-white text-decoration-none mb-4 d-block">OmniConnect<span class="text-primary">AI</span></a>
+                    <p class="text-muted">Solusi Contact Center berbasis AI untuk pengalaman pelanggan yang lebih baik dan efisiensi operasional yang optimal.</p>
+                    <div class="mt-4">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="footer-heading">Perusahaan</h5>
+                    <a href="#" class="footer-link">Tentang Kami</a>
+                    <a href="#" class="footer-link">Tim Kami</a>
+                    <a href="#" class="footer-link">Karir</a>
+                    <a href="#" class="footer-link">Blog</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="footer-heading">Produk</h5>
+                    <a href="#" class="footer-link">AI Chatbot</a>
+                    <a href="#" class="footer-link">Speech Analytics</a>
+                    <a href="#" class="footer-link">Omnichannel</a>
+                    <a href="#" class="footer-link">Personalisasi</a>
+                </div>
+                
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="footer-heading">Support</h5>
+                    <a href="#" class="footer-link">Dokumentasi</a>
+                    <a href="#" class="footer-link">FAQ</a>
+                    <a href="#" class="footer-link">Komunitas</a>
+                    <a href="#" class="footer-link">Kontak</a>
+                </div>
+                
+                <div class="col-lg-2">
+                    <h5 class="footer-heading">Kontak</h5>
+                    <p class="text-muted">Gedung Menara Kuningan Lt. 12<br>Jl. HR Rasuna Said Kav. C-11<br>Jakarta Selatan 12940</p>
+                    <p class="text-muted">info@omniconnectai.co.id<br>+62 21 5789 0123</p>
+                </div>
+            </div>
+            
+            <hr class="mt-5 mb-4 border-secondary">
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-muted small mb-md-0">&copy; 2025 OmniConnectAI. Seluruh hak cipta dilindungi undang-undang.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-muted small me-3">Kebijakan Privasi</a>
+                    <a href="#" class="text-muted small">Syarat & Ketentuan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Main Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animasi fade-in
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.getAttribute('data-delay') || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, delay);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(el => {
+                fadeObserver.observe(el);
+            });
+            
+            // Animasi counter
+            const statNumbers = document.querySelectorAll('.stats-number');
+            
+            const countObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const target = parseInt(element.getAttribute('data-target'));
+                        let count = 0;
+                        const duration = 2000; // ms
+                        const interval = Math.floor(duration / target);
+                        
+                        const counter = setInterval(() => {
+                            count += 1;
+                            element.textContent = count;
+                            
+                            if (count >= target) {
+                                clearInterval(counter);
+                                element.textContent = target;
+                            }
+                        }, interval);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            statNumbers.forEach(el => {
+                countObserver.observe(el);
+            });
+            
+            // Scroll to top button
+            const scrollTopBtn = document.querySelector('.scroll-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('active');
+                } else {
+                    scrollTopBtn.classList.remove('active');
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Smooth scroll for nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close navbar on mobile
+                        const navbarCollapse = document.querySelector('.navbar-collapse');
+                        if (navbarCollapse.classList.contains('show')) {
+                            navbarCollapse.classList.remove('show');
+                        }
+                    }
+                });
+            });
+            
+            // Form validation
+            const forms = document.querySelectorAll('.needs-validation');
+            
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    } else {
+                        event.preventDefault();
+                        // Show success message
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        const originalText = submitBtn.textContent;
+                        
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Mengirim...';
+                        
+                        setTimeout(() => {
+                            form.innerHTML = '<div class="alert alert-success p-4" role="alert"><h4 class="alert-heading">Terima Kasih!</h4><p>Pesan Anda telah terkirim. Tim kami akan segera menghubungi Anda dalam 24 jam.</p></div>';
+                        }, 1500);
+                    }
+                    
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        });
+    </script>
